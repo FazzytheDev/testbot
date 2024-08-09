@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 const botToken = '7205477186:AAHOW41iJPQwZpDcVmNJUnJ4Jicdss4dP6o';
 const bot = new TelegramBot(botToken, {polling: true});
 
-mongoose.connect('mongodb://localhost:27017/telegramReferral');
+mongoose.connect('mongodb+srv://fawazogunleye:Aabimbola2022!@cluster0.caz9xfe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
 const userSchema = new mongoose.Schema({
     telegramId: {
         type: String,
@@ -52,7 +52,7 @@ bot.onText(/\/referrals/, async (msg) => {
         const referralCount = user.referredUsers.length;
         bot.sendMessage(chatId, `You have referred ${referralCount} users.`);
     } else {
-        bot.sendMessage(chatId, 'You haven’t referred anyone yet.');
+        bot.sendMessage(chatId, `You haven’t referred anyone yet.`);
     }
 });
 app.listen(3000, () => {
