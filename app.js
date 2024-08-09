@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 const app = express();
 app.use(bodyParser.json());
-
+app.use(express.static('public'));
 const botToken = '7205477186:AAHOW41iJPQwZpDcVmNJUnJ4Jicdss4dP6o';
 const bot = new TelegramBot(botToken, {polling: true});
 
@@ -55,6 +55,9 @@ bot.onText(/\/referrals/, async (msg) => {
         bot.sendMessage(chatId, `You haven’t referred anyone yet.`);
     }
 });
+app.get('/', async(req, res) => {
+    res.sendFile('index.html');
+})
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
 });
