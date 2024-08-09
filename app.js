@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 const botToken = '7205477186:AAHOW41iJPQwZpDcVmNJUnJ4Jicdss4dP6o';
 const bot = new TelegramBot(botToken, {polling: true});
 
-mongoose.connect('mongodb+srv://fawazogunleye:Aabimbola2023!@cluster0.caz9xfe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
+mongoose.connect('mongodb+srv://fawazogunleye:Aabimbola2019!@cluster0.caz9xfe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
 const userSchema = new mongoose.Schema({
     telegramId: {
         type: String,
