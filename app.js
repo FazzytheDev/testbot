@@ -71,7 +71,7 @@ bot.onText(/\/referrals/, async (msg) => {
     const user = await User.findOne({ telegramId: chatId });
 
     if (user) {
-        const referralCount = user.referredUsers.length+1;
+        const referralCount = user.referredUsers.length;
         bot.sendMessage(chatId, `You have referred ${referralCount} users.`);
     } else {
         bot.sendMessage(chatId, `You haven’t referred anyone yet. ${chatId}`);
