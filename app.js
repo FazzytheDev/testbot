@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const app = express();
 app.use(bodyParser.json());
 app.use(express.static('public'));
-const botToken = '7497802571:AAHQw_hwYe_z_qoCEOo-lbVI1uPwinqfA5Y';
+const botToken = '7245917893:AAFklpFisT7W1ZAJDeGqx3LGlG0KgKsbKOQ';
 const bot = new TelegramBot(botToken, {polling: true});
 
 mongoose.connect('mongodb+srv://fawazogunleye:Aabimbola2022@cluster0.caz9xfe.mongodb.net/fazzy?retryWrites=true&w=majority&appName=Cluster0');
