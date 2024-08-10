@@ -44,27 +44,39 @@ bot.onText(/\/start/, async (msg) => {
         bot.sendMessage(chatId, 'Sorry, something went wrong. Please try again later.');
     }
 });
-bot.onText(/\start (.+)/, async(msg, match) => {
-    const chatId = msg.chat.id;
-    const referralCode = match[1];
-    let user = await User.findOne({telegramId: chatId});
+bot.onText(/\/start(?:\s+(.+))?/, async (msg, match) => {
+    const chatId = msg.chat.id.toString(); // Convert to string for MongoDB consistency
+    const referralCode = match[1]; // Capture the referral code, if provided
 
-    if(!user){
-        user = new User({telegramId: chatId, referredBy: referralCode})
-    if(referralCode){
-        const referrer = await User.findOne({telegramId: referralCode})
-        if(referralCode){
-            referrer.referredUsers.push(chatId);
-            await referrer.save();
+    try {
+        // Check if the user already exists in the database
+        let user = await User.findOne({ telegramId: chatId });
+
+        if (!user) {
+            // If the user doesn't exist, create a new user
+            user = new User({ telegramId: chatId, referredBy: referralCode || null });
+
+            if (referralCode) {
+                // If there is a referral code, find the referrer and add this user to their referredUsers list
+                const referrer = await User.findOne({ telegramId: referralCode });
+
+                if (referrer) {
+                    referrer.referredUsers.push(chatId);
+                    await referrer.save();
+                }
+            }
+
+            await user.save();
+            bot.sendMessage(chatId, referralCode ? `Welcome! You were referred by user ${referralCode}.` : 'Welcome!');
+        } else {
+            bot.sendMessage(chatId, 'Welcome back!');
         }
+    } catch (error) {
+        console.error('Error handling /start command:', error);
+        bot.sendMessage(chatId, 'Sorry, something went wrong. Please try again later.');
     }
-    await user.save();
-    bot.sendMessage(chatId, `Welcome! you were referred by ${referralCode}`)
-}
-else{
-   bot.sendMessage(chatId, `Welcome back!`); 
-}
-})
+});
+
 bot.onText(/\/referrals/, async (msg) => {
     const chatId = msg.chat.id;
 
