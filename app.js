@@ -74,7 +74,7 @@ bot.onText(/\/referrals/, async (msg) => {
         const referralCount = user.referredUsers.length;
         bot.sendMessage(chatId, `You have referred ${referralCount} users.`);
     } else {
-        bot.sendMessage(chatId, `You haven’t referred anyone yet.`);
+        bot.sendMessage(chatId, `You haven’t referred anyone yet. ${chatId}`);
     }
 });
 app.get('/', async(req, res) => {
