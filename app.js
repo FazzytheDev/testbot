@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
         default: 1000
     },
     lastClaimTime: {
-        type: Date(),
+        type: Date,
     },
     referredBy: {
         type: String
