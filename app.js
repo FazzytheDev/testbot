@@ -34,7 +34,7 @@ bot.onText(/\/start/, async (msg) => {
             user = new User({ telegramId: chatId });
             await user.save();
 
-            bot.sendMessage(chatId, 'Welcome!');
+            bot.sendMessage(chatId, `Welcome! ${chatId}`);
         } else {
             // If the user exists, send a welcome back message
             bot.sendMessage(chatId, 'Welcome back!');
