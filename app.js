@@ -16,6 +16,17 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    username: {
+        type: String, 
+        required: true
+    },
+    balance: {
+        type: Number,
+        default: 1000
+    },
+    lastClaimTime: {
+        type: Date(),
+    },
     referredBy: {
         type: String
     },
@@ -26,14 +37,14 @@ const User = mongoose.model('User', userSchema);
 bot.onText(/\/start(?:\s+(.+))?/, async (msg, match) => {
     const chatId = msg.chat.id.toString(); // Convert to string for MongoDB consistency
     const referralCode = match[1]; // Capture the referral code, if provided
-
+    const username = msg.chat.username;
     try {
         // Check if the user already exists in the database
         let user = await User.findOne({ telegramId: chatId });
 
         if (!user) {
             // If the user doesn't exist, create a new user
-            user = new User({ telegramId: chatId, referredBy: referralCode || null });
+            user = new User({ telegramId: chatId, username: username, referredBy: referralCode || null });
 
             if (referralCode) {
                 // If there is a referral code, find the referrer and add this user to their referredUsers list
