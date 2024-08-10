@@ -48,7 +48,7 @@ bot.onText(/\/start(?:\s+(.+))?/, async (msg, match) => {
             await user.save();
             bot.sendMessage(chatId, referralCode ? `Welcome! You were referred by user ${referralCode}.` : 'Welcome!');
         } else {
-            bot.sendMessage(chatId, 'Welcome back!');
+            bot.sendMessage(chatId, `Welcome back!: ${chatId}`);
         }
     } catch (error) {
         console.error('Error handling /start command:', error);
