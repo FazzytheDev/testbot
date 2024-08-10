@@ -22,28 +22,7 @@ const userSchema = new mongoose.Schema({
     referredUsers: [{type: String}]
 });
 const User = mongoose.model('User', userSchema);
-bot.onText(/\/start/, async (msg) => {
-    const chatId = msg.chat.id.toString(); // Convert to string for consistency in MongoDB
 
-    try {
-        // Check if the user already exists in the database
-        let user = await User.findOne({ telegramId: chatId });
-
-        if (!user) {
-            // If the user doesn't exist, create a new user
-            user = new User({ telegramId: chatId });
-            await user.save();
-
-            bot.sendMessage(chatId, `Welcome! ${chatId}`);
-        } else {
-            // If the user exists, send a welcome back message
-            bot.sendMessage(chatId, 'Welcome back!');
-        }
-    } catch (error) {
-        console.error('Error handling /start command:', error);
-        bot.sendMessage(chatId, 'Sorry, something went wrong. Please try again later.');
-    }
-});
 bot.onText(/\/start(?:\s+(.+))?/, async (msg, match) => {
     const chatId = msg.chat.id.toString(); // Convert to string for MongoDB consistency
     const referralCode = match[1]; // Capture the referral code, if provided
